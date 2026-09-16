@@ -1,12 +1,16 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {  ButtonModule} from 'primeng/button';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [ButtonModule],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
 export class App {
   protected readonly title = signal('configflow');
+  constructor() {
+    document.getElementById('p-license-host')?.remove();
+  }
 }
