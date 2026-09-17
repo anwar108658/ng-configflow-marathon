@@ -1,9 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {  ButtonModule} from 'primeng/button';
+import { Sidebar } from './layout/sidebar/sidebar';
 
 @Component({
-  imports: [ButtonModule],
+  imports: [ButtonModule,Sidebar],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
@@ -11,6 +12,14 @@ import {  ButtonModule} from 'primeng/button';
 export class App {
   protected readonly title = signal('configflow');
   constructor() {
-    document.getElementById('p-license-host')?.remove();
+    const style = document.createElement('style');
+    style.textContent = `
+      #p-license-host {
+        display: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+
   }
 }
