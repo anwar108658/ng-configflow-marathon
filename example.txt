@@ -1,0 +1,68 @@
+my-angular-app/
+├── src/
+│   ├── app/
+│   │   ├── core/
+│   │   │   ├── guards/
+│   │   │   ├── interceptors/
+│   │   │   ├── services/
+│   │   │   ├── auth/
+│   │   │   └── core.ts
+│   │   │
+│   │   ├── shared/
+│   │   │   ├── components/
+│   │   │   ├── directives/
+│   │   │   ├── pipes/
+│   │   │   ├── forms/
+│   │   │   ├── models/
+│   │   │   └── utils/
+│   │   │
+│   │   ├── features/
+│   │   │   ├── auth/
+│   │   │   │   ├── pages/
+│   │   │   │   │   ├── login/
+│   │   │   │   │   ├── register/
+│   │   │   │   │   └── forgot-password/
+│   │   │   │   │
+│   │   │   │   ├── components/
+│   │   │   │   ├── services/
+│   │   │   │   ├── models/
+│   │   │   │   ├── auth.routes.ts
+│   │   │   │   └── auth.ts
+│   │   │   │
+│   │   │   ├── users/
+│   │   │   │   ├── pages/
+│   │   │   │   │   ├── user-list/
+│   │   │   │   │   ├── user-details/
+│   │   │   │   │   └── user-create/
+│   │   │   │   ├── components/
+│   │   │   │   ├── services/
+│   │   │   │   ├── models/
+│   │   │   │   └── users.routes.ts
+│   │   │   │
+│   │   │   ├── products/
+│   │   │   ├── orders/
+│   │   │   ├── payments/
+│   │   │   └── dashboard/
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── header/
+│   │   │   ├── sidebar/
+│   │   │   ├── footer/
+│   │   │   └── main-layout/
+│   │   │
+│   │   ├── app.routes.ts
+│   │   ├── app.config.ts
+│   │   └── app.ts
+│   │
+│   ├── assets/
+│   ├── environments/
+│   │   ├── environment.ts
+│   │   └── environment.prod.ts
+│   ├── styles.scss
+│   └── main.ts
+│
+├── public/
+├── angular.json
+├── package.json
+├── tsconfig.json
+└── README.md
