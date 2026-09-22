@@ -6,7 +6,7 @@ import { InputPasswordModule } from 'primeng/inputpassword';
 import { PIcon } from '@primeicons/angular/p-icon';
 
 @Component({
-  imports: [ButtonModule, InputTextModule, InputPasswordModule, FormsModule,PIcon],
+  imports: [ButtonModule, InputTextModule, InputPasswordModule, FormsModule,],
   selector: 'app-login',
   styleUrl: './login.css',
   templateUrl: './login.html',

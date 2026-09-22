@@ -66,3 +66,6 @@ my-angular-app/
 ├── package.json
 ├── tsconfig.json
 └── README.md
+
+
+https://www.youtube.com/watch?v=ywYzoyi-Ksw&list=PLaTP_B8K0vdiUP8f3h6Y2930CJS4e_e4H&index=30

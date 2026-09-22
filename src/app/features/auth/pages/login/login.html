@@ -8,7 +8,7 @@
                 <div class="mx-auto mb-4 w-15 h-13 px-2 rounded-xl
                 bg-cyan-400/20 text-white
                 flex items-center justify-center">
-                    <img src="logo.png" alt="">
+                    <img src="logo.png" alt ="">
                 </div>
 
                 <h1 class="text-2xl font-semibold text-surface-900 dark:text-white">
@@ -25,21 +25,20 @@
 
                 <!-- Email -->
                 <div class="flex flex-col gap-2">
-                    <label for="email" class="text-sm font-medium text-surface-700 dark:text-surface-300">
-                        Email
+                    <label for="username" class="text-sm font-medium text-surface-700 dark:text-surface-300">
+                        User Name *
                     </label>
 
-                    <input pInputText id="email" type="email" placeholder="Enter your email" class="w-full" />
+                    <input pInputText id="username" type="text"  class="w-full placeholder:text-gray-700" placeholder="Enter user name : Exact name" />
                 </div>
 
                 <!-- Password -->
                 <div class="flex flex-col gap-2">
                     <label for="password" class="text-sm font-medium text-surface-700 dark:text-surface-300">
-                        Password
+                        Password *
                     </label>
 
-                    <input pInputPassword inputId="password" placeholder="Enter your password" styleClass="w-full"
-                        inputStyleClass="w-full" />
+                    <input pInputPassword inputId="password" class="w-full placeholder:text-gray-700" placeholder="Enter password" />
                 </div>
 
                 <!-- Login Button -->

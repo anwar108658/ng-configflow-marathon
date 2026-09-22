@@ -8,6 +8,7 @@ import { EllipsisV } from '@primeicons/angular/ellipsis-v';
 import { Sidebar as primeSidebar} from '@primeicons/angular/sidebar';
 import { PIcon } from '@primeicons/angular/p-icon';
 import { Header } from '../header/header';
+import { RouterOutlet } from '@angular/router';
 
 interface NavItem {
   icon: string;
@@ -26,7 +27,7 @@ interface NavGroup {
   selector: 'app-main-layout',
   styleUrl: './main-layout.css',
   templateUrl: './main-layout.html',
-  imports: [AvatarModule, SidebarModule, SidebarContent, ButtonModule, Plus, ChevronDown, EllipsisV, PIcon, Header]
+  imports: [AvatarModule, SidebarModule, SidebarContent, ButtonModule, Plus, ChevronDown, EllipsisV, PIcon, Header,RouterOutlet]
 })
 
 export class MainLayout {
