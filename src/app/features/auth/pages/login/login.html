@@ -1,99 +1,77 @@
-<div class="relative min-h-screen overflow-hidden">
+<div style="background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url(bg.png);background-repeat: no-repeat;background-size: 100% 100%;" class="relative z-10 min-h-screen flex items-center justify-center px-4">
 
-    <!-- Background Video -->
-    <video
-        #backgroundAnimation
-        class="absolute inset-0 w-full h-full object-cover"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        disablePictureInPicture
-        >
-        <source src="https://cdn.pixabay.com/video/2022/11/26/140582-775389269_large.mp4" type="video/mp4">
-    </video>
+    <div class="w-full max-w-sm">
 
-    <!-- Video Overlay -->
-    <div class="absolute inset-0 bg-black/90"></div>
+        <!-- Login Card -->
+        <div class="bg-white/95 dark:bg-surface-900/95
+            border border-white/20 dark:border-surface-700
+            rounded-2xl shadow-xl p-8 backdrop-blu  r-sm">
 
-    <!-- Login Content -->
-    <div class="relative z-10 min-h-screen flex items-center justify-center px-4">
+            <!-- Header -->
+            <div class="text-center mb-8">
 
-        <div class="w-full max-w-md">
+                <div class="mx-auto mb-4 w-15 h-13 px-2 rounded-xl
+                    bg-cyan-400/20
+                    flex items-center justify-center">
 
-            <!-- Login Card -->
-            <div class="bg-white/95 dark:bg-surface-900/95
-                border border-white/20 dark:border-surface-700
-                rounded-2xl shadow-xl p-8 backdrop-blur-sm">
-
-                <!-- Header -->
-                <div class="text-center mb-8">
-
-                    <div class="mx-auto mb-4 w-15 h-13 px-2 rounded-xl
-                        bg-cyan-400/20
-                        flex items-center justify-center">
-
-                        <img
-                            src="logo.png"
-                            alt="Logo"
-                            class="max-w-full max-h-full object-contain">
-                    </div>
-
-                    <h1 class="text-2xl font-semibold text-surface-900 dark:text-white">
-                        Welcome Back
-                    </h1>
-
-                    <p class="mt-2 text-sm text-surface-500 dark:text-surface-400">
-                        Login to your account
-                    </p>
+                    <img
+                        src="logo.png"
+                        alt="Logo"
+                        class="max-w-full max-h-full object-contain">
                 </div>
 
-                <!-- Form -->
-                <div class="flex flex-col gap-5">
+                <h1 class="text-2xl font-semibold text-surface-900 dark:text-white">
+                    Welcome Back
+                </h1>
 
-                    <!-- Username -->
-                    <div class="flex flex-col gap-2">
-                        <label
-                            for="username"
-                            class="text-sm font-medium text-surface-700 dark:text-surface-300">
-                            User Name *
-                        </label>
+                <p class="mt-2 text-sm text-surface-500 dark:text-surface-400">
+                    Login to your account
+                </p>
+            </div>
 
-                        <input
-                            pInputText
-                            id="username"
-                            type="text"
-                            class="w-full placeholder:text-gray-700"
-                            placeholder="Enter user name : Exact name" />
-                    </div>
+            <!-- Form -->
+            <div class="flex flex-col gap-5">
 
-                    <!-- Password -->
-                    <div class="flex flex-col gap-2">
-                        <label
-                            for="password"
-                            class="text-sm font-medium text-surface-700 dark:text-surface-300">
-                            Password *
-                        </label>
+                <!-- Username -->
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="username"
+                        class="text-sm font-medium text-surface-700 dark:text-surface-300">
+                        User Name *
+                    </label>
 
-                        <input
-                            pInputPassword
-                            inputId="password"
-                            class="w-full placeholder:text-gray-700"
-                            placeholder="Enter password" />
-                    </div>
-
-                    <!-- Login Button -->
-                    <button
-                        pButton
-                        styleClass="w-full">
-                        Login
-                    </button>
-
+                    <input
+                        pInputText
+                        id="username"
+                        type="text"
+                        class="w-full placeholder:text-gray-700"
+                        placeholder="Enter user name : Exact name" />
                 </div>
+
+                <!-- Password -->
+                <div class="flex flex-col gap-2">
+                    <label
+                        for="password"
+                        class="text-sm font-medium text-surface-700 dark:text-surface-300">
+                        Password *
+                    </label>
+
+                    <input
+                        pInputPassword
+                        inputId="password"
+                        class="w-full placeholder:text-gray-700"
+                        placeholder="Enter password" />
+                </div>
+
+                <!-- Login Button -->
+                <button
+                    pButton
+                    styleClass="w-full">
+                    Login
+                </button>
 
             </div>
+
         </div>
     </div>
-
 </div>

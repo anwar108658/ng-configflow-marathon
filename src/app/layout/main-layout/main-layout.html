@@ -1,9 +1,9 @@
-<div class="h-screen border border-surface-200 dark:border-surface-700 rounded-lg overflow-hidden">
+<div class="h-screen rounded-lg overflow-hidden">
     <p-sidebar-layout class="min-h-screen! relative!">
         @if (isMobile() && open()) {
             <p-sidebar-backdrop class="absolute!" />
         }
-        <p-sidebar id="preview"  [collapsible]="isMobile() ? 'offcanvas' : 'icon'" [overlay]="isMobile()" [(open)]="open">
+        <p-sidebar id="preview" variant="inset"  [collapsible]="isMobile() ? 'offcanvas' : 'icon'" [overlay]="isMobile()" [(open)]="open">
             <p-sidebar-spacer />
             <p-sidebar-aside>
                 <p-sidebar-panel>
@@ -15,7 +15,7 @@
                             }
                         </div>
                     </p-sidebar-header>
-                    <p-sidebar-content class="overflow-hidden">
+                    <p-sidebar-content class="overflow-x-hidden">
                         @for (group of navGroups; track group.label) {
                             <p-sidebar-group>
                                 <p-sidebar-group-label>{{ group.label }}</p-sidebar-group-label>
@@ -70,7 +70,7 @@
                 </p-sidebar-panel>
             </p-sidebar-aside>
         </p-sidebar>
-        <p-sidebar-main>
+        <p-sidebar-main style="background-image: linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9)),url(bg.png);background-repeat: no-repeat;background-size: 100% 100%;">
             <app-header></app-header>
             <router-outlet></router-outlet>
         </p-sidebar-main>
