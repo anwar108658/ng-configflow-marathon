@@ -1,11 +1,10 @@
-<div style="background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url(bg.png);background-repeat: no-repeat;background-size: 100% 100%;" class="relative z-10 min-h-screen flex items-center justify-center px-4">
+<div style="background-image: linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9)),url(bg.png);background-repeat: no-repeat;background-size: 100% 100%;" class="relative z-10 min-h-screen flex items-center justify-center px-4">
 
     <div class="w-full max-w-sm">
 
         <!-- Login Card -->
-        <div class="bg-white/95 dark:bg-surface-900/95
-            border border-white/20 dark:border-surface-700
-            rounded-2xl shadow-xl p-8 backdrop-blu  r-sm">
+        <div class="bg-white/95 dark:bg-gray-800/50
+            rounded-2xl shadow-xl p-5 r-sm">
 
             <!-- Header -->
             <div class="text-center mb-8">
@@ -30,47 +29,31 @@
             </div>
 
             <!-- Form -->
-            <div class="flex flex-col gap-5">
+            <form class="flex flex-col gap-5">
 
                 <!-- Username -->
-                <div class="flex flex-col gap-2">
-                    <label
-                        for="username"
-                        class="text-sm font-medium text-surface-700 dark:text-surface-300">
-                        User Name *
-                    </label>
-
-                    <input
-                        pInputText
-                        id="username"
-                        type="text"
-                        class="w-full placeholder:text-gray-700"
-                        placeholder="Enter user name : Exact name" />
-                </div>
+                
+                <p-iftalabel >
+                    <input pSize="small" pInputText  class="w-full placeholder:text-gray-700" id="password" variant="outlined" placeholder="Enter userName : exact text"/>
+                    <label for="password">User Name *</label>
+                </p-iftalabel>
 
                 <!-- Password -->
-                <div class="flex flex-col gap-2">
-                    <label
-                        for="password"
-                        class="text-sm font-medium text-surface-700 dark:text-surface-300">
-                        Password *
-                    </label>
-
-                    <input
-                        pInputPassword
-                        inputId="password"
-                        class="w-full placeholder:text-gray-700"
-                        placeholder="Enter password" />
-                </div>
+                
+                <p-iftalabel>
+                    <input pSize="small" pInputPassword class="w-full placeholder:text-gray-700" id="password" variant="outlined" placeholder="Enter password"/>
+                    <label for="password">Password *</label>
+                </p-iftalabel>
 
                 <!-- Login Button -->
                 <button
                     pButton
-                    styleClass="w-full">
+                    styleClass="w-full" variant="text" disabled>
                     Login
+
                 </button>
 
-            </div>
+            </form>
 
         </div>
     </div>
