@@ -34,23 +34,32 @@
                 <!-- Username -->
                 
                 <p-iftalabel >
-                    <input pSize="small" pInputText  class="w-full placeholder:text-gray-700" id="password" variant="outlined" placeholder="Enter userName : exact text"/>
+                    <p-iconfield>
+                        <p-inputicon>
+                            <svg pIcon="user" />
+                        </p-inputicon>
+                        <input pSize="small" pInputText  class="w-full placeholder:text-gray-700" id="password" variant="outlined" placeholder="Enter userName with exact text"/>
+                    </p-iconfield>
                     <label for="password">User Name *</label>
                 </p-iftalabel>
 
                 <!-- Password -->
                 
                 <p-iftalabel>
-                    <input pSize="small" pInputPassword class="w-full placeholder:text-gray-700" id="password" variant="outlined" placeholder="Enter password"/>
+                    <p-iconfield>
+                        <p-inputicon>
+                            <svg pIcon="lock" />
+                        </p-inputicon>
+                        <input pSize="small" pInputPassword class="w-full placeholder:text-gray-700" id="password" variant="outlined" placeholder="Enter password"/>
+                    </p-iconfield>
                     <label for="password">Password *</label>
                 </p-iftalabel>
 
                 <!-- Login Button -->
                 <button
                     pButton
-                    styleClass="w-full" variant="text" disabled>
+                    styleClass="w-full" variant="text">
                     Login
-
                 </button>
 
             </form>
