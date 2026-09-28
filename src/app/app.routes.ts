@@ -18,6 +18,12 @@ export const routes: Routes = [
                 loadComponent: () =>
                     import('./features/index')
                     .then(m => m.Module),
+            },
+            {
+                path:'test',
+                loadComponent: () =>
+                    import('./layout/menutest/menutest')
+                    .then(m => m.Menutest),
             }
         ]
         
