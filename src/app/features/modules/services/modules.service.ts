@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from '../../../core/services/supabase.service';
-import { Module } from '../models/modules.model';
+import { Menu, Module } from '../models/modules.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,6 @@ export class ModulesService {
   ) {}
 
   async getModules() {
-    const { data1, error1 }:any = await this.supabase.client
-  .from('menu_types')
-  .select('*');
-
-console.log(data1);
-console.log(error1);
-
 
     const { data, error } = await this.supabase.client
       .from('modules')
@@ -62,5 +55,6 @@ console.log(error1);
       throw error;
     }
     console.log(data)
+    return data as Menu[]
   }
 }
