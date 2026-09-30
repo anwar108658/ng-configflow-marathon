@@ -20,6 +20,12 @@ export const routes: Routes = [
                     .then(m => m.Module),
             },
             {
+                path:'bot',
+                loadComponent: () =>
+                    import('./features/index')
+                    .then(m => m.Chatai),
+            },
+            {
                 path:'test',
                 loadComponent: () =>
                     import('./layout/menutest/menutest')
