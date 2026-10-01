@@ -2,9 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
-import { UiStepper,AiChatRequest,AiChatResponse } from '../../model';
-import { ChatAssistance } from '../../services/chat-assistance';
+import { PIcon } from '@primeicons/angular/p-icon';
 import { firstValueFrom } from 'rxjs';
+
+import { UiStepper } from '../../model';
+import { ChatAssistance } from '../../services/chat-assistance';
+import { MarkdownModule } from 'ngx-markdown';
 
 interface ChatMessage {
   role: 'assistant' | 'user';
@@ -12,20 +15,30 @@ interface ChatMessage {
 }
 
 @Component({
-  imports: [AvatarModule, ButtonModule, FormsModule],
   selector: 'app-chatai',
+  standalone: true,
+  imports: [
+    AvatarModule,
+    ButtonModule,
+    FormsModule,
+    PIcon,
+    MarkdownModule
+  ],
   templateUrl: './chatai.html',
 })
 export class Chatai {
 
   private readonly aiChatService = inject(ChatAssistance);
 
-  user_prompt = 'hello world';
-  answer = signal<any>('');
+  user_prompt = '';
+  recentChats = []
+
+  messages = signal<ChatMessage[]>([]);
 
   loading = false;
 
   stepper: UiStepper | null = null;
+
 
   async askAI(): Promise<void> {
 
@@ -35,8 +48,19 @@ export class Chatai {
       return;
     }
 
+    // 1. Immediately show user's question
+    this.messages.update(messages => [
+      ...messages,
+      {
+        role: 'user',
+        text: prompt
+      }
+    ]);
+
+    // Clear input
+    this.user_prompt = '';
+
     this.loading = true;
-    this.answer.set('');
 
     this.stepper = {
       step: 0,
@@ -50,16 +74,38 @@ export class Chatai {
       const result:any = await firstValueFrom(
         this.aiChatService.ask(prompt)
       );
-      this.answer.set(result?.response_text);
-      console.log("result", result?.response_text)
 
-      if (result.ui_stepper) {
+      console.log('AI result:', result);
+
+      // 2. Add AI response to conversation
+      if (result?.response_text) {
+
+        this.messages.update(messages => [
+          ...messages,
+          {
+            role: 'assistant',
+            text: result.response_text
+          }
+        ]);
+      }
+
+      // 3. Update AI stepper
+      if (result?.ui_stepper) {
         this.stepper = result.ui_stepper;
       }
 
     } catch (error) {
 
       console.error('AI Assistant Error:', error);
+
+      // Optional: show error inside conversation
+      this.messages.update(messages => [
+        ...messages,
+        {
+          role: 'assistant',
+          text: 'Sorry, something went wrong while processing your request.'
+        }
+      ]);
 
       this.stepper = {
         step: 0,
@@ -71,7 +117,6 @@ export class Chatai {
     } finally {
 
       this.loading = false;
-
     }
   }
 }

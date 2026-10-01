@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { SidebarModule, SidebarContent } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
@@ -9,6 +9,7 @@ import { Sidebar as primeSidebar} from '@primeicons/angular/sidebar';
 import { PIcon } from '@primeicons/angular/p-icon';
 import { Header } from '../header/header';
 import { RouterOutlet } from '@angular/router';
+import { SupabaseService } from '../../core/services/supabase.service';
 
 interface NavItem {
   icon: string;
@@ -35,35 +36,15 @@ export class MainLayout {
     open = signal(true);
     private mql?: MediaQueryList;
     private mqlListener?: (e: MediaQueryListEvent) => void;
-    navGroups: NavGroup[] = [
-        {
-          label: 'Navigation',
-          items: [
-            { icon: 'home', label: 'Home', isActive: true },
-            { icon: 'inbox', label: 'Inbox', badge: '12' },
-            { icon: 'search', label: 'Search' },
-            { icon: 'bell', label: 'Notifications', badge: '3' }
-          ]
-        },
-        {
-          label: 'Projects',
-          action: true,
-          items: [
-            { icon: 'chart-bar', label: 'Analytics', subItems: [{ label: 'Overview', isActive: true }, { label: 'Reports' }, { label: 'Real-time' }] },
-            { icon: 'users', label: 'Team' },
-            { icon: 'calendar', label: 'Calendar' },
-            { icon: 'folder', label: 'Documents', subItems: [{ label: 'Shared' }, { label: 'Private' }, { label: 'Archived' }] }
-          ]
-        },
-        {
-          label: 'Billing',
-          items: [
-            { icon: 'credit-card', label: 'Payments' },
-            { icon: 'shopping-cart', label: 'Orders' },
-            { icon: 'star', label: 'Subscriptions' }
-          ]
-        }
-    ];
+    private getMod = inject(SupabaseService)
+
+  async getModuleslocal () {
+    const res = await this.getMod.getModulesLocal()
+    this.navGroups = res
+    console.log(res,"mod")
+  }
+
+    navGroups:any = []
     ngOnInit() {
         if (typeof window === 'undefined') return;
         this.mql = window.matchMedia('(max-width: 1023px)');
@@ -74,6 +55,7 @@ export class MainLayout {
           this.open.set(!e.matches);
         };
         this.mql.addEventListener('change', this.mqlListener);
+        this.getModuleslocal()
     }
     ngOnDestroy() {
       this.mql?.removeEventListener('change', this.mqlListener!);

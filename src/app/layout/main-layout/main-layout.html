@@ -18,40 +18,13 @@
                     <p-sidebar-content class="overflow-x-hidden">
                         @for (group of navGroups; track group.label) {
                             <p-sidebar-group>
-                                <p-sidebar-group-label>{{ group.label }}</p-sidebar-group-label>
-                                @if (group.action) {
-                                    <button pSidebarGroupAction><svg data-p-icon="plus"></svg></button>
-                                }
                                 <p-sidebar-group-content>
-                                    <p-sidebar-menu>
-                                        @for (item of group.items; track item.label) {
-                                            <p-sidebar-menu-item [collapsible]="!!item.subItems" [defaultOpen]="hasActiveSub(item)">
-                                                <button pSidebarMenuButton [isActive]="!!item.isActive">
-                                                    <svg [pIcon]="item.icon"></svg>
-                                                    <span>{{ item.label }}</span>
-                                                    @if (item.subItems) {
-                                                        <svg data-p-icon="chevron-down" class="ml-auto"></svg>
-                                                    }
-                                                </button>
-                                                @if (item.badge) {
-                                                    <p-sidebar-menu-badge>{{ item.badge }}</p-sidebar-menu-badge>
-                                                }
-                                                @if (item.subItems) {
-                                                    <p-sidebar-menu-sub>
-                                                        @for (sub of item.subItems; track sub.label) {
-                                                            <p-sidebar-menu-sub-item>
-                                                                <button pSidebarMenuSubButton [isActive]="!!sub.isActive">
-                                                                    <span>{{ sub.label }}</span>
-                                                                </button>
-                                                            </p-sidebar-menu-sub-item>
-                                                        }
-                                                    </p-sidebar-menu-sub>
-                                                } @else if (!item.badge) {
-                                                    <button pSidebarMenuAction showOnHover><svg data-p-icon="ellipsis-v"></svg></button>
-                                                }
-                                            </p-sidebar-menu-item>
-                                        }
-                                    </p-sidebar-menu>
+                                        <p-sidebar-menu-item >
+                                            <button pSidebarMenuButton>
+                                                <svg [pIcon]="group.icon"></svg>
+                                                <span>{{ group.moduleName }}</span>
+                                            </button>
+                                        </p-sidebar-menu-item>
                                 </p-sidebar-group-content>
                             </p-sidebar-group>
                         }

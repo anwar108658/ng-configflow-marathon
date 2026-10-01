@@ -25,12 +25,6 @@ export const routes: Routes = [
                     import('./features/index')
                     .then(m => m.Chatai),
             },
-            {
-                path:'test',
-                loadComponent: () =>
-                    import('./layout/menutest/menutest')
-                    .then(m => m.Menutest),
-            }
         ]
         
     }
