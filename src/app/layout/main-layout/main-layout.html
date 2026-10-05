@@ -16,6 +16,9 @@
                         </div>
                     </p-sidebar-header>
                     <p-sidebar-content class="overflow-x-hidden">
+                        @if (loading()) {
+                            <h1 class="">....</h1>
+                        }
                         @for (group of navGroups; track group.label) {
                             <p-sidebar-group>
                                 <p-sidebar-group-content>

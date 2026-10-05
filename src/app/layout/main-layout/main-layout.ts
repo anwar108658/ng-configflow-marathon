@@ -34,12 +34,13 @@ interface NavGroup {
 export class MainLayout {
     isMobile = signal(true);
     open = signal(true);
-    private mql?: MediaQueryList;
+    loading = signal(true);
+    private mql?: MediaQueryList; 
     private mqlListener?: (e: MediaQueryListEvent) => void;
     private getMod = inject(SupabaseService)
 
   async getModuleslocal () {
-    const res = await this.getMod.getModulesLocal()
+    const res = await this.getMod.getModulesLocal().finally(() => this.loading.set(false))
     this.navGroups = res
     console.log(res,"mod")
   }
