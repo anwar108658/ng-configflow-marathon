@@ -1,13 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
 import { PIcon } from '@primeicons/angular/p-icon';
 import { firstValueFrom } from 'rxjs';
 
 import { UiStepper } from '../../model';
 import { ChatAssistance } from '../../services/chat-assistance';
 import { MarkdownModule } from 'ngx-markdown';
+import { SupabaseService } from '../../../../core/services/supabase.service';
 
 interface ChatMessage {
   role: 'assistant' | 'user';
@@ -22,6 +24,7 @@ interface ChatMessage {
     ButtonModule,
     FormsModule,
     PIcon,
+    BadgeModule,
     MarkdownModule
   ],
   templateUrl: './chatai.html',
@@ -29,6 +32,10 @@ interface ChatMessage {
 export class Chatai {
 
   private readonly aiChatService = inject(ChatAssistance);
+   @Input() status: any;
+   constructor(){
+    console.log(this.status)
+   }
 
   user_prompt = '';
   recentChats = []
@@ -38,7 +45,6 @@ export class Chatai {
   loading = false;
 
   stepper: UiStepper | null = null;
-
 
   async askAI(): Promise<void> {
 
@@ -119,4 +125,6 @@ export class Chatai {
       this.loading = false;
     }
   }
+
+  
 }

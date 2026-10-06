@@ -10,6 +10,7 @@ import { PIcon } from '@primeicons/angular/p-icon';
 import { Header } from '../header/header';
 import { RouterOutlet } from '@angular/router';
 import { SupabaseService } from '../../core/services/supabase.service';
+import { Chatai } from '../../features';
 
 interface NavItem {
   icon: string;
@@ -28,16 +29,18 @@ interface NavGroup {
   selector: 'app-main-layout',
   styleUrl: './main-layout.css',
   templateUrl: './main-layout.html',
-  imports: [AvatarModule, SidebarModule, SidebarContent, ButtonModule, Plus, ChevronDown, EllipsisV, PIcon, Header,RouterOutlet]
+  imports: [AvatarModule, SidebarModule, SidebarContent, ButtonModule, Plus, ChevronDown, EllipsisV, PIcon, Header, RouterOutlet, Chatai]
 })
 
 export class MainLayout {
     isMobile = signal(true);
     open = signal(true);
     loading = signal(true);
+    status = signal<any>('');
     private mql?: MediaQueryList; 
     private mqlListener?: (e: MediaQueryListEvent) => void;
     private getMod = inject(SupabaseService)
+    private readonly supabaseService = inject(SupabaseService);
 
   async getModuleslocal () {
     const res = await this.getMod.getModulesLocal().finally(() => this.loading.set(false))
@@ -64,4 +67,14 @@ export class MainLayout {
     hasActiveSub(item: NavItem): boolean {
       return !!item.subItems?.some((s) => s.isActive);
     }
+
+    async ActiveSession(): Promise<void> {
+    try {
+      const result: any = await this.supabaseService.active();
+      this.status.set(result);
+      console.log('Active Session result:', result);
+    } catch (error) {
+      console.error('Active Session Error:', error);
+    }
+  }
 }
