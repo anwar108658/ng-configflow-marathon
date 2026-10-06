@@ -49,10 +49,9 @@
         <p-sidebar-main style="background-image: linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9)),url(bg.png);background-repeat: no-repeat;background-size: 100% 100%;">
             <app-header></app-header>
             <router-outlet></router-outlet>
-            <div class="fixed bottom-4 right-4  bg-blue-50/10 rounded-lg p-2 shadow-lg backdrop-blur-sm">
-                <button pButton type="button" severity="secondary" variant="link" (click)="ActiveSession()">
-                    Chat AI
-                    <svg [pIcon]="'sparkles'" class="text-xl"></svg>
+            <div class="fixed bottom-6 right-7  bg-blue-50/10 rounded-lg p-2 shadow-lg backdrop-blur-sm">
+                <button pButton type="button" severity="secondary" variant="link" (click)="ActiveSession()" class="p-0! px-1!">
+                    <svg [pIcon]="'sparkles'" size="1.6rem"></svg>
                 </button>
             </div>
             @if (status()?.mcp_server === 'ACTIVE') {

@@ -2,6 +2,7 @@ import { Component, inject, Input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { BadgeModule } from 'primeng/badge';
 import { PIcon } from '@primeicons/angular/p-icon';
 import { firstValueFrom } from 'rxjs';
@@ -22,6 +23,7 @@ interface ChatMessage {
   imports: [
     AvatarModule,
     ButtonModule,
+    SplitButtonModule,
     FormsModule,
     PIcon,
     BadgeModule,
@@ -32,11 +34,12 @@ interface ChatMessage {
 export class Chatai {
 
   private readonly aiChatService = inject(ChatAssistance);
+  private readonly supabaseService = inject(SupabaseService);
    @Input() status: any;
    constructor(){
     console.log(this.status)
    }
-
+   highOpPending = signal<any>('');
   user_prompt = '';
   recentChats = []
 
@@ -126,5 +129,13 @@ export class Chatai {
     }
   }
 
-  
+  async ActiveSession(): Promise<void> {
+    try {
+      const result: any = await this.supabaseService.pendingHighOp();
+      this.highOpPending.set(result);
+      console.log('Pending High Op result:', result);
+    } catch (error) {
+      console.error('Pending High Op Error:', error);
+    }
+  }
 }

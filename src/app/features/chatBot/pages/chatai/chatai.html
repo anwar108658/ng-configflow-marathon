@@ -33,7 +33,19 @@
 
         <!-- Chat Area -->
         <div class="flex min-h-0 flex-1 flex-col overflow-hidden">
-
+            <div>
+                <button pButton type="button" disabled severity="help" variant="outlined" size="small" class="m-2 p-0! px-2!">
+                    Active Sessions
+                    {{status?.stats?.total_active_sessions}}
+                </button>
+                <button pButton type="button" (click)="ActiveSession()" severity="warn" variant="outlined" size="small" class="m-2 p-0! px-2!">
+                    Pending Approvals
+                    {{status?.stats?.pending_approvals_count}}
+                </button>
+                <div class="flex justify-center">
+                    <p-splitbutton disabled [label]="'Active Sessions '+ status?.stats?.total_active_sessions" severity="help" variant="outlined" size="small" class="m-2 p-0! px-2!" [model]="[]" />
+                </div>
+            </div>
             <!-- Messages -->
             <div
                 class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">

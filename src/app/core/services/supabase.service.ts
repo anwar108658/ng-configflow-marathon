@@ -11,6 +11,7 @@ export class SupabaseService {
   private readonly http = inject(HttpClient);
    url:string = 'https://m3vsbzqp-5086.asse.devtunnels.ms/api/Modules'
    urlActive:string = 'https://m3vsbzqp-8000.asse.devtunnels.ms/api/ui/dashboard'
+   urlPendingHighOp:string = 'https://m3vsbzqp-8000.asse.devtunnels.ms/api/approvals/pending'
 
   public readonly client: SupabaseClient;
   private readonly apiKey = 'fte-secret-key-2026';
@@ -34,4 +35,14 @@ export class SupabaseService {
     const res = await firstValueFrom(this.http.get(this.urlActive,{headers}))
     return res
   }
+  async pendingHighOp(){
+     const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-API-Key': this.apiKey
+    });
+    const res = await firstValueFrom(this.http.get(this.urlPendingHighOp,{headers}))
+    return res
+  }
+  
+
 }
