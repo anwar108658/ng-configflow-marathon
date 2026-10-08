@@ -1,9 +1,11 @@
-import { Component, inject, Input, signal } from '@angular/core';
+import { Component, computed, inject, Input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
+import { TabsModule } from 'primeng/tabs';
 import { PIcon } from '@primeicons/angular/p-icon';
 import { firstValueFrom } from 'rxjs';
 
@@ -11,6 +13,7 @@ import { UiStepper } from '../../model';
 import { ChatAssistance } from '../../services/chat-assistance';
 import { MarkdownModule } from 'ngx-markdown';
 import { SupabaseService } from '../../../../core/services/supabase.service';
+import { KeyValuePipe } from '@angular/common';
 
 interface ChatMessage {
   role: 'assistant' | 'user';
@@ -27,7 +30,10 @@ interface ChatMessage {
     FormsModule,
     PIcon,
     BadgeModule,
-    MarkdownModule
+    AccordionModule,
+    MarkdownModule,
+    TabsModule,
+    KeyValuePipe
   ],
   templateUrl: './chatai.html',
 })
@@ -41,6 +47,7 @@ export class Chatai {
    }
    highOpPending = signal<any>('');
   user_prompt = '';
+  ishighOpPendingOpen = signal<boolean>(false);
   recentChats = []
 
   messages = signal<ChatMessage[]>([]);
@@ -133,9 +140,46 @@ export class Chatai {
     try {
       const result: any = await this.supabaseService.pendingHighOp();
       this.highOpPending.set(result);
-      console.log('Pending High Op result:', result);
+      console.log('Pending High Op Error:', result);
+      return await result?.status_code
     } catch (error) {
       console.error('Pending High Op Error:', error);
     }
   }
+
+  async highPendingHandler(type:string){
+    switch (type) {
+      case 'api': {
+        const status: any = await this.ActiveSession();
+        console.log(status, 'status');
+
+        if (status === 200) {
+          this.ishighOpPendingOpen.set(true);
+        }
+        break;
+      }
+      case 'tog':
+        this.ishighOpPendingOpen.update(value => !value);
+        break;
+
+      case 'model':
+        this.ishighOpPendingOpen.set(false);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  toolCreationApprovals = computed(() =>
+  this.highOpPending()?.approvals?.filter(
+    (item:any) => item.status === 'TOOL_CREATING'
+  ) ?? []
+);
+
+pendingApprovals = computed(() =>
+  this.highOpPending()?.approvals?.filter(
+    (item:any) => item.status !== 'TOOL_CREATING'
+  ) ?? []
+);
 }

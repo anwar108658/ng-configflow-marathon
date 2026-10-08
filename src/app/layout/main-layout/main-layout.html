@@ -54,7 +54,7 @@
                     <svg [pIcon]="'sparkles'" size="1.6rem"></svg>
                 </button>
             </div>
-            @if (status()?.mcp_server === 'ACTIVE') {
+            @if (status()?.mcp_server === 'ACTIVE' || true) {
                 <app-chatai [status]="status()" ></app-chatai>
             }
         </p-sidebar-main>

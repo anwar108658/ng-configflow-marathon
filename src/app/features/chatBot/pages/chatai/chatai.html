@@ -1,6 +1,193 @@
-<main class="absolute rounded-2xl bottom-5 right-5 bg-blue-900/20 flex h-[70vh] max-w-100 min-h-0 overflow-hidden text-slate-100">
+<main class="absolute rounded-2xl bottom-5 right-5 bg-blue-900/20 flex h-[80vh] max-w-100 min-h-0 overflow-hidden text-slate-100">
     <section class="flex h-full min-h-0 min-w-0 flex-1 flex-col">
+        <!-- model who open conditionally -->
+            @if (ishighOpPendingOpen()) {
+                <div (click)="highPendingHandler('model')" class="absolute z-10 flex justify-center items-center w-full h-full bg-black/90">
+                    <div (click)="$event.stopPropagation()" class="flex min-h-100 max-h-100 w-90 overflow-auto flex-col gap-2 bg-gray-950 rounded-lg p-4">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-[.8rem] text-blue-500">Pending Approvals - {{highOpPending()?.pending_count}}</h4>
+                            <button pButton (click)="highPendingHandler('model')" type="button" severity="danger" variant="text" size="small" class="p-0! px-1! ">
+                                
+                                <svg pIcon="plus" size="1.2rem" class="rotate-45"></svg>
+                            </button>
+                        </div>
+                        <p-tabs value="pending">
 
+    <p-tablist class="h-6! text-[.8rem]">
+
+        <p-tab value="pending" class=" flex-1! p-0! text-center">
+            Pending
+        </p-tab>
+
+        <p-tab value="tool-creation" class="flex-1! p-0! text-center">
+            Tool Creation
+        </p-tab>
+
+    </p-tablist>
+
+    <p-tabpanels>
+
+        <!-- Pending Tab -->
+        <p-tabpanel value="pending">
+
+            <p-accordion>
+                @for (
+                    item of pendingApprovals();
+                    track item?.ui_card?.action_name
+                ) {
+
+                    <p-accordion-panel
+                        [value]="item?.ui_card?.action_name"
+                    >
+
+                        <p-accordion-header
+                            class="py-1! text-[.6rem]"
+                        >
+                            {{ item?.ui_card?.action_name }}
+                        </p-accordion-header>
+
+                        <p-accordion-content>
+
+                            <!-- Your existing content -->
+                            <table
+                                style="border-collapse: collapse; width: 100%; font-size: .5rem;"
+                            >
+                                <tbody>
+
+                                    @for (
+                                        item1 of item?.ui_card?.parameter_summary | keyvalue;
+                                        track item1.key
+                                    ) {
+                                        <tr>
+                                            <th
+                                                style="border: 1px solid #ccc; padding: 2px; text-align: left;"
+                                            >
+                                                {{ item1.key }}
+                                            </th>
+
+                                            <td
+                                                style="border: 1px solid #ccc; padding: 2px;"
+                                            >
+                                                {{ item1.value }}
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+                        </p-accordion-content>
+
+                    </p-accordion-panel>
+                }
+            </p-accordion>
+
+        </p-tabpanel>
+
+
+        <!-- Tool Creation Tab -->
+        <p-tabpanel value="tool-creation">
+
+            <p-accordion>
+                @for (
+                    item of toolCreationApprovals();
+                    track item?.ui_card?.action_name
+                ) {
+
+                    <p-accordion-panel
+                        [value]="item?.ui_card?.action_name"
+                    >
+
+                        <p-accordion-header
+                            class="py-1! text-[.6rem]"
+                        >
+                            {{ item?.ui_card?.action_name }}
+                        </p-accordion-header>
+
+                        <p-accordion-content>
+
+                            <!-- Tool creation specific UI -->
+
+                            <table
+                                style="border-collapse: collapse; width: 100%; font-size: .5rem;"
+                            >
+                                <tbody>
+
+                                    @for (
+                                        item1 of item?.ui_card?.parameter_summary | keyvalue;
+                                        track item1.key
+                                    ) {
+                                        <tr>
+                                            <th
+                                                style="border: 1px solid #ccc; padding: 2px; text-align: left;"
+                                            >
+                                                {{ item1.key }}
+                                            </th>
+
+                                            <td
+                                                style="border: 1px solid #ccc; padding: 2px;"
+                                            >
+                                                {{ item1.value }}
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+                            <button
+                                pButton
+                                size="small"
+                                severity="danger"
+                                class="p-0 px-1 text-[.6rem]"
+                            >
+                                Create Tool
+                            </button>
+
+                        </p-accordion-content>
+
+                    </p-accordion-panel>
+                }
+            </p-accordion>
+
+        </p-tabpanel>
+
+    </p-tabpanels>
+
+</p-tabs>
+                        <!-- <p-accordion>
+                            @for (item of highOpPending()?.approvals; track $index) {
+                                <p-accordion-panel [value]="item?.ui_card?.action_name">
+                                    <p-accordion-header class="py-1! text-[.6rem]">{{item?.ui_card?.action_name}}</p-accordion-header>
+                                        <p-accordion-content>
+                                            <table style="border-collapse: collapse; width: 100%; font-size: .5rem;">
+                                                <tbody>
+    
+                                                @for (
+                                                    item1 of item?.ui_card?.parameter_summary | keyvalue;
+                                                    track item1.key
+                                                ) {
+                                                    <tr>
+                                                    <th style="border: 1px solid #ccc; padding: 2px; text-align: left;">
+                                                        {{ item1.key }}
+                                                    </th>
+    
+                                                    <td style="border: 1px solid #ccc; padding: 2px;">
+                                                        {{ item1.value }}
+                                                    </td>
+                                                    </tr>
+                                                }
+    
+                                                </tbody>
+                                            </table>
+                                            <button pButton size="small" severity="danger" class="p-0 px-1 text-[.6rem]">{{item?.ui_card?.action_name?.split(' ')[0]}}</button>
+                                        </p-accordion-content>
+                                    </p-accordion-panel>
+                            }
+                        </p-accordion> -->
+                    </div>
+                </div>
+            }
 
         <!-- Header -->
         <header
@@ -33,19 +220,23 @@
 
         <!-- Chat Area -->
         <div class="flex min-h-0 flex-1 flex-col overflow-hidden">
-            <div>
+            <div class="flex items-center border-b border-white/10 bg-transparent p-1">
                 <button pButton type="button" disabled severity="help" variant="outlined" size="small" class="m-2 p-0! px-2!">
                     Active Sessions
                     {{status?.stats?.total_active_sessions}}
                 </button>
-                <button pButton type="button" (click)="ActiveSession()" severity="warn" variant="outlined" size="small" class="m-2 p-0! px-2!">
-                    Pending Approvals
-                    {{status?.stats?.pending_approvals_count}}
-                </button>
-                <div class="flex justify-center">
-                    <p-splitbutton disabled [label]="'Active Sessions '+ status?.stats?.total_active_sessions" severity="help" variant="outlined" size="small" class="m-2 p-0! px-2!" [model]="[]" />
+                <div class="flex items-center bg-amber-700/20 px-2 rounded">
+                    <button pButton type="button" (click)="highPendingHandler('api')" severity="warn" variant="text" size="small" class="my-1 p-0! px-2!">
+                        Pending Approvals
+                        {{status?.stats?.pending_approvals_count}}
+                    </button>
+                    <button pButton (click)="highPendingHandler('tog')" variant="outlined" severity="warn" class="p-0! px-1!" size="small">
+                        <svg pIcon="bars" size="1.2rem"></svg>
+                    </button>
                 </div>
             </div>
+
+            
             <!-- Messages -->
             <div
                 class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">

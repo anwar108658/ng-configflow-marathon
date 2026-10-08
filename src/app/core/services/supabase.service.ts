@@ -10,11 +10,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class SupabaseService {
   private readonly http = inject(HttpClient);
    url:string = 'https://m3vsbzqp-5086.asse.devtunnels.ms/api/Modules'
+   baseUrl:string = 'https://m3vsbzqp-5086.asse.devtunnels.ms/api'
    urlActive:string = 'https://m3vsbzqp-8000.asse.devtunnels.ms/api/ui/dashboard'
    urlPendingHighOp:string = 'https://m3vsbzqp-8000.asse.devtunnels.ms/api/approvals/pending'
 
   public readonly client: SupabaseClient;
   private readonly apiKey = 'fte-secret-key-2026';
+
+   headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-API-Key': this.apiKey
+    });
 
   constructor() {
     this.client = createClient(
@@ -23,25 +29,27 @@ export class SupabaseService {
     );
     
   }
+
+  private get<T>(endpoint: string): Promise<T> {
+    return firstValueFrom(
+      this.http.get<T>(
+        `${this.baseUrl}/${endpoint}`,
+        { headers: this.headers }
+      )
+    );
+  }
+
   async getModulesLocal(){
     const res = await firstValueFrom(this.http.get(this.url))
     return res
   }
-  async active(){
-     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-API-Key': this.apiKey
-    });
-    const res = await firstValueFrom(this.http.get(this.urlActive,{headers}))
-    return res
+  
+  async active() {
+    return this.get('ui/dashboard');
   }
-  async pendingHighOp(){
-     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'X-API-Key': this.apiKey
-    });
-    const res = await firstValueFrom(this.http.get(this.urlPendingHighOp,{headers}))
-    return res
+
+  async pendingHighOp() {
+    return this.get('approvals/pending');
   }
   
 
