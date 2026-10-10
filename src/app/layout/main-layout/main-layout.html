@@ -3,7 +3,7 @@
         @if (isMobile() && open()) {
             <p-sidebar-backdrop class="absolute!" />
         }
-        <p-sidebar id="preview" variant="inset"  [collapsible]="isMobile() ? 'offcanvas' : 'icon'" [overlay]="isMobile()" [(open)]="open">
+        <p-sidebar id="preview" variant="floating"  [collapsible]="isMobile() ? 'offcanvas' : 'icon'" [overlay]="isMobile()" [(open)]="open">
             <p-sidebar-spacer />
             <p-sidebar-aside>
                 <p-sidebar-panel>
@@ -19,12 +19,12 @@
                         @if (loading()) {
                             <h1 class="">....</h1>
                         }
-                        @for (group of navGroups; track group.label) {
+                        @for (group of navGroups; track group.id) {
                             <p-sidebar-group>
                                 <p-sidebar-group-content>
                                         <p-sidebar-menu-item >
                                             <button pSidebarMenuButton>
-                                                <svg [pIcon]="group.icon"></svg>
+                                                <ng-icon [name]="group.icon" strokeWidth=""></ng-icon>
                                                 <span>{{ group.moduleName }}</span>
                                             </button>
                                         </p-sidebar-menu-item>

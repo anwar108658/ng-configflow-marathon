@@ -75,7 +75,24 @@
 
                                 </tbody>
                             </table>
-
+                            <button
+                                pButton
+                                size="small"
+                                severity="danger"
+                                (click)="deletePendingHighOp(item?.approval_id,'approved')"
+                                class="p-0 px-1 text-[.6rem] mr-2"
+                            >
+                                Approve
+                            </button>
+                            <button
+                                pButton
+                                size="small"
+                                severity="help"
+                                (click)="deletePendingHighOp(item?.approval_id,'rejected')"
+                                class="p-0 px-1 text-[.6rem]"
+                            >
+                                Reject
+                            </button>
                         </p-accordion-content>
 
                     </p-accordion-panel>

@@ -9,6 +9,7 @@ import { Sidebar as primeSidebar} from '@primeicons/angular/sidebar';
 import { PIcon } from '@primeicons/angular/p-icon';
 import { Header } from '../header/header';
 import { RouterOutlet } from '@angular/router';
+import { NgIcon } from '@ng-icons/core';
 import { SupabaseService } from '../../core/services/supabase.service';
 import { Chatai } from '../../features';
 
@@ -29,7 +30,7 @@ interface NavGroup {
   selector: 'app-main-layout',
   styleUrl: './main-layout.css',
   templateUrl: './main-layout.html',
-  imports: [AvatarModule, SidebarModule, SidebarContent, ButtonModule, Plus, ChevronDown, EllipsisV, PIcon, Header, RouterOutlet, Chatai]
+  imports: [NgIcon ,AvatarModule, SidebarModule, SidebarContent, ButtonModule, PIcon, Header, RouterOutlet, Chatai]
 })
 
 export class MainLayout {
@@ -43,9 +44,9 @@ export class MainLayout {
     private readonly supabaseService = inject(SupabaseService);
 
   async getModuleslocal () {
-    const res = await this.getMod.getModulesLocal().finally(() => this.loading.set(false))
-    this.navGroups = res
-    console.log(res,"mod")
+    const res:any = await this.getMod.getModulesLocal().finally(() => this.loading.set(false))
+    this.navGroups = res.data
+    console.log(this.navGroups)
   }
 
     navGroups:any = []
@@ -59,6 +60,7 @@ export class MainLayout {
           this.open.set(!e.matches);
         };
         this.mql.addEventListener('change', this.mqlListener);
+
         this.getModuleslocal()
     }
     ngOnDestroy() {

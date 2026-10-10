@@ -5,6 +5,8 @@ import { providePrimeNG } from 'primeng/config';
 import { provideMarkdown } from 'ngx-markdown';
 import { definePreset } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
+import * as lucideIcons from '@ng-icons/lucide';
+import {provideIcons} from '@ng-icons/core';
 
 const AppTheme = definePreset(Aura, {
   semantic: {
@@ -30,7 +32,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideMarkdown(),
-
+    provideIcons(lucideIcons),
     providePrimeNG({
       theme: {
         preset: AppTheme,

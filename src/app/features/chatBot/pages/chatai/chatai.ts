@@ -182,4 +182,14 @@ pendingApprovals = computed(() =>
     (item:any) => item.status !== 'TOOL_CREATING'
   ) ?? []
 );
+
+
+async deletePendingHighOp(id: string,msg?:string) {
+  try {
+     const res = await this.supabaseService.deletePendingHighOp(id, msg);
+    console.log(`Pending High Op with ID ${id} deleted successfully.`,res);
+  } catch (error) {
+    console.error(`Error deleting Pending High Op with ID ${id}:`, error);
+  }
+}
 }
