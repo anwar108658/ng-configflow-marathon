@@ -2,13 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { AvatarModule } from 'primeng/avatar';
 import { SidebarModule, SidebarContent } from 'primeng/sidebar';
 import { ButtonModule } from 'primeng/button';
-import { Plus } from '@primeicons/angular/plus';
-import { ChevronDown } from '@primeicons/angular/chevron-down';
-import { EllipsisV } from '@primeicons/angular/ellipsis-v';
-import { Sidebar as primeSidebar} from '@primeicons/angular/sidebar';
 import { PIcon } from '@primeicons/angular/p-icon';
 import { Header } from '../header/header';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NgIcon } from '@ng-icons/core';
 import { SupabaseService } from '../../core/services/supabase.service';
 import { Chatai } from '../../features';
@@ -37,19 +33,43 @@ export class MainLayout {
     isMobile = signal(true);
     open = signal(true);
     loading = signal(true);
+    loading1 = signal(false);
     status = signal<any>('');
+    navGroups:any = []
+    service = inject(SupabaseService)
+    Menus:any = []
     private mql?: MediaQueryList; 
     private mqlListener?: (e: MediaQueryListEvent) => void;
     private getMod = inject(SupabaseService)
     private readonly supabaseService = inject(SupabaseService);
+    router = inject(Router); 
 
-  async getModuleslocal () {
-    const res:any = await this.getMod.getModulesLocal().finally(() => this.loading.set(false))
-    this.navGroups = res.data
-    console.log(this.navGroups)
-  }
+  async getModuleslocal() {
+    try {
+      this.loading.set(true);
+      const res: any = await this.getMod.getModulesLocal();
+      this.navGroups = res.data;
+      console.log(this.navGroups);
+    } catch (error) {
+      console.error('Failed to get modules:', error);
+    } finally {
+      this.loading.set(false);
+    }
+}
 
-    navGroups:any = []
+  async getModulesMenulocal(id: string) {
+    try {
+      const res: any = await this.getMod.getModulesLocal(`/Menus`,  { moduleId: id });
+      this.service.menus.set(res.data);
+      await this.router.navigate(['/app/module']);
+      console.log(this.service.menus());
+    } catch (error) {
+      console.error('Failed to get modules:', error);
+    } finally {
+    }
+}
+
+
     ngOnInit() {
         if (typeof window === 'undefined') return;
         this.mql = window.matchMedia('(max-width: 1023px)');
@@ -71,12 +91,20 @@ export class MainLayout {
     }
 
     async ActiveSession(): Promise<void> {
+      this.loading1.set(true);
     try {
       const result: any = await this.supabaseService.active();
       this.status.set(result);
       console.log('Active Session result:', result);
     } catch (error) {
       console.error('Active Session Error:', error);
+    } finally {
+      this.loading1.set(false);
     }
   }
+  
+  clearStatus() {
+  this.status.set(null);
+  console.log("first",this.status)
+}
 }

@@ -1,1 +1,42 @@
-<p>module works!</p>
+<div class="p-4 md:p-6 text-white">
+
+<div class="mb-6">
+    <h1 class="text-xl font-semibold">Menus</h1>
+    <p class="text-sm text-gray-400 mt-1">
+    Available menus
+    </p>
+</div>
+
+<div class="rounded-xl border border-white/10
+            bg-black/30 backdrop-blur-md overflow-hidden">
+
+    <table class="w-full text-sm text-left">
+    <thead class="bg-white/3 text-gray-400">
+        <tr>
+        <th class="px-6 py-4 font-medium">ID</th>
+        <th class="px-6 py-4 font-medium">Menu Name</th>
+        <th class="px-6 py-4 font-medium">Module ID</th>
+        </tr>
+    </thead>
+
+    <tbody class="divide-y divide-white/5">
+        @for (menu of menus(); track menu.id) {
+        <tr class="hover:bg-cyan-400/4">
+            <td class="px-6 py-4 text-gray-400">
+            {{ menu.id }}
+            </td>
+            <td class="px-6 py-4 text-white">
+                <button pButton size="small" variant="link" class="p-0! px-1! hover:underline" (click)="getMenuTablelocal(menu.menuName)">
+                    {{ menu.menuName }}
+                </button>
+            </td>
+            <td class="px-6 py-4 text-gray-300">
+            {{ menu.moduleId }}
+            </td>
+        </tr>
+        }
+    </tbody>
+    </table>
+
+</div>
+</div>

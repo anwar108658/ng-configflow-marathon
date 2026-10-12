@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, signal } from '@angular/core';
+import { Component, computed, inject, Input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -41,6 +41,7 @@ export class Chatai {
 
   private readonly aiChatService = inject(ChatAssistance);
   private readonly supabaseService = inject(SupabaseService);
+  clearStatusFunc = output<void>();
    @Input() status: any;
    constructor(){
     console.log(this.status)
@@ -192,4 +193,5 @@ async deletePendingHighOp(id: string,msg?:string) {
     console.error(`Error deleting Pending High Op with ID ${id}:`, error);
   }
 }
+
 }

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../../Environments/environment';
 import { firstValueFrom } from 'rxjs';
@@ -9,8 +9,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class SupabaseService {
   private readonly http = inject(HttpClient);
-   url:string = 'https://m3vsbzqp-5086.asse.devtunnels.ms/api/Modules'
+   baseUrl1:string = 'https://m3vsbzqp-5086.asse.devtunnels.ms/api'
    baseUrl:string = 'https://m3vsbzqp-8000.asse.devtunnels.ms/api'
+
+   menus:any = signal([]);
+   menuTable:any = signal([]);
 
   public readonly client: SupabaseClient;
   private readonly apiKey = 'fte-secret-key-2026';
@@ -38,9 +41,9 @@ export class SupabaseService {
     );
   }
 
-  async getModulesLocal(){
-    console.log(this.url)
-    const res = await firstValueFrom(this.http.get(this.url))
+  async getModulesLocal(endpoint: string = '/Modules', parameters: any = {}): Promise<any> {
+    console.log(this.baseUrl1)
+    const res = await firstValueFrom(this.http.get(this.baseUrl1 + endpoint, { params: parameters }))
     console.log(res,"res")
     return res
   }
@@ -65,4 +68,5 @@ export class SupabaseService {
       }
     ));
   }
+  
 }

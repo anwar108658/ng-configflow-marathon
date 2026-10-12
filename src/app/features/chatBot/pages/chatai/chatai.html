@@ -1,178 +1,148 @@
-<main class="absolute rounded-2xl bottom-5 right-5 bg-blue-900/20 flex h-[80vh] max-w-100 min-h-0 overflow-hidden text-slate-100">
+<main
+    class="fixed z-10 rounded-2xl bottom-5 right-5 bg-gray-900 flex h-[80vh] max-w-100 min-h-0 overflow-hidden text-slate-100">
     <section class="flex h-full min-h-0 min-w-0 flex-1 flex-col">
         <!-- model who open conditionally -->
-            @if (ishighOpPendingOpen()) {
-                <div (click)="highPendingHandler('model')" class="absolute z-10 flex justify-center items-center w-full h-full bg-black/90">
-                    <div (click)="$event.stopPropagation()" class="flex min-h-100 max-h-100 w-90 overflow-auto flex-col gap-2 bg-gray-950 rounded-lg p-4">
-                        <div class="flex items-center justify-between">
-                            <h4 class="text-[.8rem] text-blue-500">Pending Approvals - {{highOpPending()?.pending_count}}</h4>
-                            <button pButton (click)="highPendingHandler('model')" type="button" severity="danger" variant="text" size="small" class="p-0! px-1! ">
-                                
-                                <svg pIcon="plus" size="1.2rem" class="rotate-45"></svg>
-                            </button>
-                        </div>
-                        <p-tabs value="pending">
+        @if (ishighOpPendingOpen()) {
+        <div (click)="highPendingHandler('model')"
+            class="absolute z-10 flex justify-center items-center w-full h-full bg-black/90">
+            <div (click)="$event.stopPropagation()"
+                class="flex min-h-100 max-h-100 w-90 overflow-auto flex-col gap-2 bg-gray-950 rounded-lg p-4">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-[.8rem] text-blue-500">Pending Approvals - {{highOpPending()?.pending_count}}</h4>
+                    <button pButton (click)="highPendingHandler('model')" type="button" severity="danger" variant="text"
+                        size="small" class="p-0! px-1! ">
+                        <svg pIcon="plus" size="1.2rem" class="rotate-45"></svg>
+                    </button>
+                </div>
+                <p-tabs value="pending">
 
-    <p-tablist class="h-6! text-[.8rem]">
+                    <p-tablist class="h-6! text-[.8rem]">
 
-        <p-tab value="pending" class=" flex-1! p-0! text-center">
-            Pending
-        </p-tab>
+                        <p-tab value="pending" class=" flex-1! p-0! text-center">
+                            Pending
+                        </p-tab>
 
-        <p-tab value="tool-creation" class="flex-1! p-0! text-center">
-            Tool Creation
-        </p-tab>
+                        <p-tab value="tool-creation" class="flex-1! p-0! text-center">
+                            Tool Creation
+                        </p-tab>
 
-    </p-tablist>
+                    </p-tablist>
 
-    <p-tabpanels>
+                    <p-tabpanels>
 
-        <!-- Pending Tab -->
-        <p-tabpanel value="pending">
+                        <!-- Pending Tab -->
+                        <p-tabpanel value="pending">
 
-            <p-accordion>
-                @for (
-                    item of pendingApprovals();
-                    track item?.ui_card?.action_name
-                ) {
+                            <p-accordion>
+                                @for (
+                                item of pendingApprovals();
+                                track item?.ui_card?.action_name
+                                ) {
 
-                    <p-accordion-panel
-                        [value]="item?.ui_card?.action_name"
-                    >
+                                <p-accordion-panel [value]="item?.ui_card?.action_name">
 
-                        <p-accordion-header
-                            class="py-1! text-[.6rem]"
-                        >
-                            {{ item?.ui_card?.action_name }}
-                        </p-accordion-header>
+                                    <p-accordion-header class="py-1! text-[.6rem]">
+                                        {{ item?.ui_card?.action_name }}
+                                    </p-accordion-header>
 
-                        <p-accordion-content>
+                                    <p-accordion-content>
 
-                            <!-- Your existing content -->
-                            <table
-                                style="border-collapse: collapse; width: 100%; font-size: .5rem;"
-                            >
-                                <tbody>
+                                        <!-- Your existing content -->
+                                        <table style="border-collapse: collapse; width: 100%; font-size: .5rem;">
+                                            <tbody>
 
-                                    @for (
-                                        item1 of item?.ui_card?.parameter_summary | keyvalue;
-                                        track item1.key
-                                    ) {
-                                        <tr>
-                                            <th
-                                                style="border: 1px solid #ccc; padding: 2px; text-align: left;"
-                                            >
-                                                {{ item1.key }}
-                                            </th>
+                                                @for (
+                                                item1 of item?.ui_card?.parameter_summary | keyvalue;
+                                                track item1.key
+                                                ) {
+                                                <tr>
+                                                    <th style="border: 1px solid #ccc; padding: 2px; text-align: left;">
+                                                        {{ item1.key }}
+                                                    </th>
 
-                                            <td
-                                                style="border: 1px solid #ccc; padding: 2px;"
-                                            >
-                                                {{ item1.value }}
-                                            </td>
-                                        </tr>
-                                    }
+                                                    <td style="border: 1px solid #ccc; padding: 2px;">
+                                                        {{ item1.value }}
+                                                    </td>
+                                                </tr>
+                                                }
 
-                                </tbody>
-                            </table>
-                            <button
-                                pButton
-                                size="small"
-                                severity="danger"
-                                (click)="deletePendingHighOp(item?.approval_id,'approved')"
-                                class="p-0 px-1 text-[.6rem] mr-2"
-                            >
-                                Approve
-                            </button>
-                            <button
-                                pButton
-                                size="small"
-                                severity="help"
-                                (click)="deletePendingHighOp(item?.approval_id,'rejected')"
-                                class="p-0 px-1 text-[.6rem]"
-                            >
-                                Reject
-                            </button>
-                        </p-accordion-content>
+                                            </tbody>
+                                        </table>
+                                        <button pButton size="small" severity="danger"
+                                            (click)="deletePendingHighOp(item?.approval_id,'approved')"
+                                            class="p-0 px-1 text-[.6rem] mr-2">
+                                            Approve
+                                        </button>
+                                        <button pButton size="small" severity="help"
+                                            (click)="deletePendingHighOp(item?.approval_id,'rejected')"
+                                            class="p-0 px-1 text-[.6rem]">
+                                            Reject
+                                        </button>
+                                    </p-accordion-content>
 
-                    </p-accordion-panel>
-                }
-            </p-accordion>
+                                </p-accordion-panel>
+                                }
+                            </p-accordion>
 
-        </p-tabpanel>
+                        </p-tabpanel>
 
 
-        <!-- Tool Creation Tab -->
-        <p-tabpanel value="tool-creation">
+                        <!-- Tool Creation Tab -->
+                        <p-tabpanel value="tool-creation">
 
-            <p-accordion>
-                @for (
-                    item of toolCreationApprovals();
-                    track item?.ui_card?.action_name
-                ) {
+                            <p-accordion>
+                                @for (
+                                item of toolCreationApprovals();
+                                track item?.ui_card?.action_name
+                                ) {
 
-                    <p-accordion-panel
-                        [value]="item?.ui_card?.action_name"
-                    >
+                                <p-accordion-panel [value]="item?.ui_card?.action_name">
 
-                        <p-accordion-header
-                            class="py-1! text-[.6rem]"
-                        >
-                            {{ item?.ui_card?.action_name }}
-                        </p-accordion-header>
+                                    <p-accordion-header class="py-1! text-[.6rem]">
+                                        {{ item?.ui_card?.action_name }}
+                                    </p-accordion-header>
 
-                        <p-accordion-content>
+                                    <p-accordion-content>
 
-                            <!-- Tool creation specific UI -->
+                                        <!-- Tool creation specific UI -->
 
-                            <table
-                                style="border-collapse: collapse; width: 100%; font-size: .5rem;"
-                            >
-                                <tbody>
+                                        <table style="border-collapse: collapse; width: 100%; font-size: .5rem;">
+                                            <tbody>
 
-                                    @for (
-                                        item1 of item?.ui_card?.parameter_summary | keyvalue;
-                                        track item1.key
-                                    ) {
-                                        <tr>
-                                            <th
-                                                style="border: 1px solid #ccc; padding: 2px; text-align: left;"
-                                            >
-                                                {{ item1.key }}
-                                            </th>
+                                                @for (
+                                                item1 of item?.ui_card?.parameter_summary | keyvalue;
+                                                track item1.key
+                                                ) {
+                                                <tr>
+                                                    <th style="border: 1px solid #ccc; padding: 2px; text-align: left;">
+                                                        {{ item1.key }}
+                                                    </th>
 
-                                            <td
-                                                style="border: 1px solid #ccc; padding: 2px;"
-                                            >
-                                                {{ item1.value }}
-                                            </td>
-                                        </tr>
-                                    }
+                                                    <td style="border: 1px solid #ccc; padding: 2px;">
+                                                        {{ item1.value }}
+                                                    </td>
+                                                </tr>
+                                                }
 
-                                </tbody>
-                            </table>
+                                            </tbody>
+                                        </table>
 
-                            <button
-                                pButton
-                                size="small"
-                                severity="danger"
-                                class="p-0 px-1 text-[.6rem]"
-                            >
-                                Create Tool
-                            </button>
+                                        <button pButton size="small" severity="danger" class="p-0 px-1 text-[.6rem]">
+                                            Create Tool
+                                        </button>
 
-                        </p-accordion-content>
+                                    </p-accordion-content>
 
-                    </p-accordion-panel>
-                }
-            </p-accordion>
+                                </p-accordion-panel>
+                                }
+                            </p-accordion>
 
-        </p-tabpanel>
+                        </p-tabpanel>
 
-    </p-tabpanels>
+                    </p-tabpanels>
 
-</p-tabs>
-                        <!-- <p-accordion>
+                </p-tabs>
+                <!-- <p-accordion>
                             @for (item of highOpPending()?.approvals; track $index) {
                                 <p-accordion-panel [value]="item?.ui_card?.action_name">
                                     <p-accordion-header class="py-1! text-[.6rem]">{{item?.ui_card?.action_name}}</p-accordion-header>
@@ -202,9 +172,9 @@
                                     </p-accordion-panel>
                             }
                         </p-accordion> -->
-                    </div>
-                </div>
-            }
+            </div>
+        </div>
+        }
 
         <!-- Header -->
         <header
@@ -213,23 +183,17 @@
             <div class="flex min-w-0 items-center gap-2">
 
                 @if(status?.gateway_status === 'ONLINE') {
-                    <p-badge severity="success" size="small" [value]="status?.gateway_status" />
+                <p-badge severity="success" size="small" [value]="status?.gateway_status" />
                 }@else {
-                    <p-badge severity="danger" size="small" [value]="status?.gateway_status" />
+                <p-badge severity="danger" size="small" [value]="status?.gateway_status" />
                 }
 
             </div>
 
 
-            <button
-                pButton
-                type="button"
-                severity="secondary"
-                [text]="true"
-                class="px-2! text-xs! text-slate-100!">
-
-                New chat
-
+            <button pButton (click)="this.clearStatusFunc.emit()" type="button" severity="danger" variant="text"
+                size="small" class="p-0! px-1!">
+                <svg pIcon="plus" size="1.2rem" class="rotate-45"></svg>
             </button>
 
         </header>
@@ -238,25 +202,27 @@
         <!-- Chat Area -->
         <div class="flex min-h-0 flex-1 flex-col overflow-hidden">
             <div class="flex items-center border-b border-white/10 bg-transparent p-1">
-                <button pButton type="button" disabled severity="help" variant="outlined" size="small" class="m-2 p-0! px-2!">
+                <button pButton type="button" disabled severity="help" variant="outlined" size="small"
+                    class="m-2 p-0! px-2!">
                     Active Sessions
                     {{status?.stats?.total_active_sessions}}
                 </button>
                 <div class="flex items-center bg-amber-700/20 px-2 rounded">
-                    <button pButton type="button" (click)="highPendingHandler('api')" severity="warn" variant="text" size="small" class="my-1 p-0! px-2!">
+                    <button pButton type="button" (click)="highPendingHandler('api')" severity="warn" variant="text"
+                        size="small" class="my-1 p-0! px-2!">
                         Pending Approvals
                         {{status?.stats?.pending_approvals_count}}
                     </button>
-                    <button pButton (click)="highPendingHandler('tog')" variant="outlined" severity="warn" class="p-0! px-1!" size="small">
+                    <button pButton (click)="highPendingHandler('tog')" variant="outlined" severity="warn"
+                        class="p-0! px-1!" size="small">
                         <svg pIcon="bars" size="1.2rem"></svg>
                     </button>
                 </div>
             </div>
 
-            
+
             <!-- Messages -->
-            <div
-                class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">
+            <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-3">
 
                 <div class="mx-auto max-w-3xl space-y-3">
 
@@ -264,31 +230,29 @@
                     <!-- Empty State -->
                     @if (messages().length === 0 && !loading) {
 
-                        <div class="flex p-5 items-center justify-center">
+                    <div class="flex p-5 items-center justify-center">
 
-                            <div class="text-center">
+                        <div class="text-center">
 
-                                <div
-                                    class="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-blue-600/20 text-blue-300">
+                            <div
+                                class="mx-auto mb-4 flex size-14 items-center justify-center rounded-2xl bg-blue-600/20 text-blue-300">
 
-                                    <svg
-                                        pIcon="sparkles"
-                                        class="text-xl">
-                                    </svg>
-
-                                </div>
-
-                                <h2 class="text-lg font-semibold text-white">
-                                    How can I help?
-                                </h2>
-
-                                <p class="mt-2 text-sm text-slate-400">
-                                    Ask ConfigFlow AI anything about your project.
-                                </p>
+                                <svg pIcon="sparkles" class="text-xl">
+                                </svg>
 
                             </div>
 
+                            <h2 class="text-lg font-semibold text-white">
+                                How can I help?
+                            </h2>
+
+                            <p class="mt-2 text-sm text-slate-400">
+                                Ask ConfigFlow AI anything about your project.
+                            </p>
+
                         </div>
+
+                    </div>
 
                     }
 
@@ -296,41 +260,36 @@
                     <!-- Conversation -->
                     @for (message of messages(); track $index) {
 
-                        @if (message.role === 'user') {
+                    @if (message.role === 'user') {
 
-                            <!-- User Message -->
-                            <div class="flex justify-end">
+                    <!-- User Message -->
+                    <div class="flex justify-end">
 
-                                <div
-                                    class="text-[.8rem] max-w-[85%] rounded-2xl rounded-br-md bg-blue-600 px-4 py-1 text-sm leading-6 text-white shadow-sm sm:max-w-[75%]">
+                        <div
+                            class="text-[.8rem] max-w-[85%] rounded-2xl rounded-br-md bg-blue-600 px-4 py-1 text-sm leading-6 text-white shadow-sm sm:max-w-[75%]">
 
-                                    {{ message.text }}
+                            {{ message.text }}
 
-                                </div>
+                        </div>
 
-                            </div>
+                    </div>
 
-                        } @else {
+                    } @else {
 
-                            <!-- Assistant Message -->
-                            <div class="flex items-start gap-2">
+                    <!-- Assistant Message -->
+                    <div class="flex items-start gap-2">
 
-                                <p-avatar
-                                    label="C"
-                                    size="normal"
-                                    shape="circle"
-                                    class="mt-0.5 shrink-0">
-                                </p-avatar>
+                        <p-avatar label="C" size="normal" shape="circle" class="mt-0.5 shrink-0">
+                        </p-avatar>
 
-                                <markdown
-                                    [data]="message.text"
-                                    class="max-w-[85%] rounded-2xl rounded-bl-md border border-white/15 bg-black/25 px-3 py-2 text-[.8rem] leading-6 text-slate-100 sm:max-w-[75%]">
+                        <markdown [data]="message.text"
+                            class="max-w-[85%] rounded-2xl rounded-bl-md border border-white/15 bg-black/25 px-3 py-2 text-[.8rem] leading-6 text-slate-100 sm:max-w-[75%]">
 
-                                </markdown>
+                        </markdown>
 
-                            </div>
+                    </div>
 
-                        }
+                    }
 
                     }
 
@@ -338,34 +297,31 @@
                     <!-- AI Loading -->
                     @if (loading) {
 
-                        <div class="flex items-start gap-3">
+                    <div class="flex items-start gap-3">
 
-                            <p-avatar
-                                label="C"
-                                shape="circle"
-                                class="mt-0.5 shrink-0">
-                            </p-avatar>
+                        <p-avatar label="C" shape="circle" class="mt-0.5 shrink-0">
+                        </p-avatar>
 
-                            <div
-                                class="flex items-center rounded-2xl rounded-bl-md border border-white/15 bg-black/25 px-4 py-3 text-sm text-slate-300">
+                        <div
+                            class="flex items-center rounded-2xl rounded-bl-md border border-white/15 bg-black/25 px-4 py-3 text-sm text-slate-300">
 
-                                <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2">
 
-                                    <span>Thinking</span>
-                                    <img width="30" src="loading.gif" alt="">
-                                </div>
-
-                                @if (stepper) {
-
-                                    <div class="mt-2 text-xs text-slate-400">
-                                        {{ stepper.message }}
-                                    </div>
-
-                                }
-
+                                <span>Thinking</span>
+                                <img width="30" src="loading.gif" alt="">
                             </div>
 
+                            @if (stepper) {
+
+                            <div class="mt-2 text-xs text-slate-400">
+                                {{ stepper.message }}
+                            </div>
+
+                            }
+
                         </div>
+
+                    </div>
 
                     }
 
@@ -383,29 +339,19 @@
                         class="flex rounded-lg border border-white/20 bg-black/35 p-2 shadow-lg backdrop-blur-sm transition focus-within:border-blue-300/70 focus-within:ring-2 focus-within:ring-blue-400/15">
 
 
-                        <textarea
-                            [(ngModel)]="user_prompt"
-                            (keydown.control.enter)="askAI()"
-                            rows="2"
-                            placeholder="Message ConfigFlow AI..."
-                            aria-label="Message ConfigFlow AI"
+                        <textarea [(ngModel)]="user_prompt" (keydown.control.enter)="askAI()" rows="2"
+                            placeholder="Message ConfigFlow AI..." aria-label="Message ConfigFlow AI"
                             [disabled]="loading"
                             class="max-h-20 min-h-14 w-full resize-y text-[.8rem] placeholder:text-[.7rem] scrollbar-none border-0 bg-transparent p-1 text-sm leading-6 text-white outline-none placeholder:text-slate-400">
                         </textarea>
 
                         <div class="flex items-center">
 
-                            <button
-                                pButton
-                                type="button"
-                                variant="outlined"
-                                [disabled]="loading || !user_prompt.trim()"
-                                (click)="askAI()"
-                                size="small"
-                                aria-label="Send message">
+                            <button pButton type="button" variant="outlined" [disabled]="loading || !user_prompt.trim()"
+                                (click)="askAI()" size="small" aria-label="Send message">
                                 Perform
                                 <svg pIcon="sparkles"></svg>
-    
+
                             </button>
                         </div>
 

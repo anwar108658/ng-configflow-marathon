@@ -1,9 +1,9 @@
 <div class="h-screen rounded-lg overflow-hidden">
-    <p-sidebar-layout class="min-h-screen! relative!">
+    <p-sidebar-layout class="min-h-screen! relative! max-h-screen!">
         @if (isMobile() && open()) {
             <p-sidebar-backdrop class="absolute!" />
         }
-        <p-sidebar id="preview" variant="floating"  [collapsible]="isMobile() ? 'offcanvas' : 'icon'" [overlay]="isMobile()" [(open)]="open">
+        <p-sidebar id="preview" variant="inset"  [collapsible]="isMobile() ? 'offcanvas' : 'icon'" [overlay]="isMobile()" [(open)]="open">
             <p-sidebar-spacer />
             <p-sidebar-aside>
                 <p-sidebar-panel>
@@ -23,7 +23,7 @@
                             <p-sidebar-group>
                                 <p-sidebar-group-content>
                                         <p-sidebar-menu-item >
-                                            <button pSidebarMenuButton>
+                                            <button pSidebarMenuButton (click)="getModulesMenulocal(group?.id)">
                                                 <ng-icon [name]="group.icon" strokeWidth=""></ng-icon>
                                                 <span>{{ group.moduleName }}</span>
                                             </button>
@@ -46,16 +46,28 @@
                 </p-sidebar-panel>
             </p-sidebar-aside>
         </p-sidebar>
-        <p-sidebar-main style="background-image: linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9)),url(bg.png);background-repeat: no-repeat;background-size: 100% 100%;">
+        <p-sidebar-main class=""  style="background-image: linear-gradient(rgba(0,0,0,0.9),rgba(0,0,0,0.9)),url(bg.png);background-repeat: no-repeat;background-size: 100% 100%;">
             <app-header></app-header>
             <router-outlet></router-outlet>
             <div class="fixed bottom-6 right-7  bg-blue-50/10 rounded-lg p-2 shadow-lg backdrop-blur-sm">
-                <button pButton type="button" severity="secondary" variant="link" (click)="ActiveSession()" class="p-0! px-1!">
-                    <svg [pIcon]="'sparkles'" size="1.6rem"></svg>
-                </button>
+                <button
+                    pButton
+                    type="button"
+                    severity="secondary"
+                    variant="link"
+                    (click)="ActiveSession()"
+                    [disabled]="loading1()"
+                    class="p-0! px-1!"
+                    >
+                    @if (loading1()) {
+                        <svg [pIcon]="'spinner'" [spin]="true"  size="1.6rem"></svg>
+                    } @else {
+                        <svg [pIcon]="'sparkles'" size="1.6rem"></svg>
+                    }
+                    </button>
             </div>
-            @if (status()?.mcp_server === 'ACTIVE' || true) {
-                <app-chatai [status]="status()" ></app-chatai>
+            @if (status()?.mcp_server === 'ACTIVE') {
+                <app-chatai (clearStatusFunc)="clearStatus()" [status]="status()" ></app-chatai>
             }
         </p-sidebar-main>
     </p-sidebar-layout>

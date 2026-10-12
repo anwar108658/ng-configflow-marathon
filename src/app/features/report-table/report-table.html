@@ -1,0 +1,136 @@
+<div class="p-4 md:p-6 min-w-0 max-w-full text-white">
+
+    <!-- Page Header -->
+    <div class="mb-6">
+        <div class="flex items-center gap-3 mb-2">
+            <h1 class="text-xl md:text-2xl font-semibold">
+                {{ table()?.name }}
+            </h1>
+        </div>
+
+        <p class="text-sm text-gray-400">
+            Customer records
+        </p>
+    </div>
+
+    <!-- Table Container -->
+    <div class="w-full min-w-0 max-w-full rounded-xl
+                border border-white/10 bg-black/30
+                backdrop-blur-md shadow-xl overflow-hidden">
+
+        <!-- Table Header -->
+        <div class="px-4 md:px-5 py-4
+                    border-b border-white/10 bg-white/[0.02]">
+            <h2 class="font-medium">All Customers</h2>
+
+            <p class="text-xs text-gray-400 mt-1">
+                Total records: {{ table()?.count }}
+            </p>
+        </div>
+
+        <!-- PrimeNG Table -->
+        <div class="w-full min-w-0">
+            <p-table
+                [value]="table()?.data ?? []"
+                dataKey="Id"
+                [paginator]="true"
+                [rows]="10"
+                [rowsPerPageOptions]="[10, 25, 50, 100]"
+                [scrollable]="true"
+                scrollHeight="flex"
+                [tableStyle]="{'min-width': '1100px'}"
+                styleClass="config-table"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} records">
+
+                <!-- Header -->
+                <ng-template #header>
+                    <tr>
+                        <th pFrozenColumn>ID</th>
+                        <th pFrozenColumn>Name</th>
+                        <th>Group</th>
+                        <th>Cellular</th>
+                        <th>Phone No</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>City</th>
+                        <th>Address</th>
+                        <th>Created Date</th>
+                        <th>Warehouse</th>
+                    </tr>
+                </ng-template>
+
+                <!-- Body -->
+                <ng-template #body let-customer>
+                    <tr>
+                        <td pFrozenColumn class="font-mono">
+                            {{ customer.Id }}
+                        </td>
+
+                        <td pFrozenColumn class="font-medium">
+                            {{ customer.Name }}
+                        </td>
+
+                        <td>
+                            <span class="inline-flex px-2.5 py-1
+                                         rounded-md bg-cyan-400/10
+                                         border border-cyan-400/20
+                                         text-cyan-300 text-xs">
+                                {{ customer.Group }}
+                            </span>
+                        </td>
+
+                        <td>{{ customer.Cellular }}</td>
+                        <td>{{ customer.PhoneNo }}</td>
+                        <td>{{ customer.Email }}</td>
+                        <td>{{ customer.Country }}</td>
+                        <td>{{ customer.City }}</td>
+                        <td>{{ customer.Address }}</td>
+
+                        <td>
+                            {{ customer.CreatedDate
+                                | date:'dd MMM yyyy, hh:mm a' }}
+                        </td>
+
+                        <td>
+                            <span class="inline-flex items-center gap-2">
+                                <span class="size-2 rounded-full
+                                             bg-cyan-400 shrink-0"></span>
+                                {{ customer.WhsName }}
+                            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <!-- Empty State -->
+                <ng-template #emptymessage>
+                    <tr>
+                        <td colspan="11"
+                            class="text-center py-10 text-gray-400">
+                            No customer records found.
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-4 md:px-5 py-3
+                    border-t border-white/10 bg-white/[0.02]
+                    flex flex-col sm:flex-row
+                    sm:items-center sm:justify-between gap-2">
+
+            <span class="text-xs text-gray-400">
+                Config Flow
+            </span>
+
+            <span class="inline-flex items-center gap-2
+                         text-xs text-gray-400">
+                <span class="size-2 rounded-full bg-cyan-400"></span>
+                Customer Management
+            </span>
+        </div>
+
+    </div>
+</div>

@@ -20,6 +20,12 @@ export const routes: Routes = [
                     .then(m => m.Module),
             },
             {
+                path:'report',
+                loadComponent: () =>
+                    import('./features/index')
+                    .then(m => m.ReportTable),
+            },
+            {
                 path:'bot',
                 loadComponent: () =>
                     import('./features/index')
